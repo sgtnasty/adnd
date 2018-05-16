@@ -44,8 +44,9 @@ def get_abilities():
 
 def get_race(races):
     # p1 = [0.4, 0.125, 0.125, 0.09, 0.15, 0.1, 0.01]
-    p2 = [0.4, 0.125, 0.125, 0.05, 0.2, 0.09, 0.01]
-    rname = numpy.random.choice(pc_races, p=p2)
+    # p2 = [0.4, 0.125, 0.125, 0.05, 0.2, 0.09, 0.01]
+    # rname = numpy.random.choice(pc_races, p=p2)
+    rname = numpy.random.choice(pc_races)
     return rname
 
 
@@ -154,6 +155,16 @@ def apply_racial_ability(rolled_score, pc_race, ability_name, pc_gender,
     if ability_score > racial_max:
         ability_score = racial_max
     return ability_score
+
+
+def get_money(gold_dice):
+    parts = gold_dice.split('d')
+    damt = int(parts[0])
+    dtyp = int(parts[1])
+    gold = 0
+    for d in range(damt):
+        gold = gold + numpy.random.randint(1, (dtyp + 1))
+    return gold
 
 
 def calculate_power(pc_str, pc_int, pc_wis, pc_dex, pc_con, pc_cha, pc_level,
@@ -292,11 +303,18 @@ def main(races, classes):
     # Name
     # Languages
     # Gold
+    pc_gold = get_money(classes[pc_class]["Gold"])
     # Level
     pc_level = 1
     # Hit points
     pc_hp = get_hitpoints(classes, pc_class, attrs[4], pc_level)
     # PRINT
+    print("Name: unknown")
+    print('Race: {} ({})'.format(pc_race, pc_gender))
+    print("Level {} {}".format(pc_level, pc_class))
+    print('Alignment: {}'.format(pc_alignment))
+    print("")
+    print("Abilities:")
     if (str(pc_class) == "Fighter" and pc_str == 18):
         print('Str: {}/{}'.format(pc_str, pc_str_bonus))
         print_str_fighter(pc_str_bonus)
@@ -308,17 +326,17 @@ def main(races, classes):
     print('Dex: {}'.format(pc_dex))
     print('Con: {}'.format(pc_con))
     print('Cha: {}'.format(pc_cha))
-    print('Race: {} ({})'.format(pc_race, pc_gender))
-    if pc_race in races:
-        print("Special Abilities:")
-        for sa in races[pc_race]["Special Abilities"]:
-            print sa
-    print('Class: {}'.format(pc_class))
-    print('Level: {}'.format(pc_level))
+    print("")
+    print("Racial Special Abilities:")
+    for sa in races[pc_race]["Special Abilities"]:
+        print("  {}".format(sa))
     clsinfo = classes[pc_class]
+    print("")
+    print('Class Specific Weapons and Armor')
     print('  Armor allowed: {}'.format(clsinfo["Armor"]))
     print('  Shield allowed: {}'.format(clsinfo["Sheild"]))
     print('  Weapons allowed: {}'.format(clsinfo["Weapons"]))
+    print("")
     print('Weapon Proficiencies:')
     print('  Initial # of Weapons: {}'.format(
         clsinfo["Proficiencies"]["Initial"]))
@@ -326,8 +344,9 @@ def main(races, classes):
         clsinfo["Proficiencies"]["Penalty"]))
     print('  Added proficiency: 1/{} levels'.format(
         clsinfo["Proficiencies"]["Gain"]))
-    print('Alignment: {}'.format(pc_alignment))
+    print("")
     print('Languages: {}'.format(" ".join(races[pc_race]["Languages"])))
+    print('Starting GP: {}'.format(pc_gold))
     print('Hit Points: {}'.format(pc_hp))
     power = calculate_power(pc_str, pc_int, pc_wis, pc_dex, pc_con, pc_cha,
                             pc_level, pc_hp)
