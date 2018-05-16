@@ -37,3 +37,7 @@ Being one of:
 * Monk
 
 Must use exact case for desired class name.
+
+## Sample
+
+![alt text](https://raw.githubusercontent.com/sgtnasty/adnd/master/sample.png "Screenshot")
