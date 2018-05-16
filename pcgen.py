@@ -175,6 +175,12 @@ def calculate_power(pc_str, pc_int, pc_wis, pc_dex, pc_con, pc_cha, pc_level,
     return power
 
 
+def print_header():
+    print("################################################################################")
+    print("#                         ADVANCED DUNGEONS AND DRAGONS                        #")
+    print("################################################################################")
+
+
 def print_str(pc_str):
     hit = -3
     dam = -1
@@ -309,7 +315,9 @@ def main(races, classes):
     # Hit points
     pc_hp = get_hitpoints(classes, pc_class, attrs[4], pc_level)
     # PRINT
-    print("Name: unknown")
+    print_header()
+    print("Player: _______________________________")
+    print("Name:   _______________________________")
     print('Race: {} ({})'.format(pc_race, pc_gender))
     print("Level {} {}".format(pc_level, pc_class))
     print('Alignment: {}'.format(pc_alignment))
