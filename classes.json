@@ -1,0 +1,242 @@
+{
+    "Cleric": {
+        "Alignments": [
+            "Lawful Good",
+            "Neutral Good",
+            "Chaotic Good",
+            "Chaotic Neutral",
+            "Lawful Neutral",
+            "Lawful Evil",
+            "Neutral Evil",
+            "Chaotic Evil"
+        ],
+        "Min": { "wis": 9 },
+        "Max Level": 20,
+        "Hit Die": 8,
+        "Max Hit Dice": 9,
+        "Spell Ability": true,
+        "Armor": "any",
+        "Sheild": "any",
+        "Weapons": "club, flail, hammer, mace, staff",
+        "Oil": true,
+        "Poison": false,
+        "Proficiencies": {
+            "Initial": 2,
+            "Penalty": -3,
+            "Gain": 4
+        }
+    },
+    "Druid": {
+        "Alignments": [
+            "Neutral"
+        ],
+        "Min": { "wis": 12, "cha": 12},
+        "Max Level": 14,
+        "Hit Die": 8,
+        "Max Hit Dice": 14,
+        "Spell Ability": true,
+        "Armor": "leather",
+        "Sheild": "wooden",
+        "Weapons": "club, dagger, dart, hammer, scimitar, sling, spear, staff",
+        "Oil": true,
+        "Poison": false,
+        "Proficiencies": {
+            "Initial": 2,
+            "Penalty": -4,
+            "Gain": 5
+        }
+    },
+    "Fighter": {
+        "Alignments": [
+            "Lawful Good",
+            "Neutral Good",
+            "Chaotic Good",
+            "Neutral",
+            "Chaotic Neutral",
+            "Lawful Neutral",
+            "Lawful Evil",
+            "Neutral Evil",
+            "Chaotic Evil"
+        ],
+        "Min": { "str": 9, "con": 7},
+        "Max Level": 20,
+        "Hit Die": 10,
+        "Max Hit Dice": 9,
+        "Spell Ability": false,
+        "Armor": "any",
+        "Sheild": "any",
+        "Weapons": "any",
+        "Oil": true,
+        "Poison": false,
+        "Proficiencies": {
+            "Initial": 4,
+            "Penalty": -2,
+            "Gain": 3
+        }
+    },
+    "Paladin": {
+        "Alignments": [
+            "Lawful Good"
+        ],
+        "Min": { "str": 12, "int": 9, "wis": 13, "con": 9, "cha": 17 },
+        "Max Level": 20,
+        "Hit Die": 10,
+        "Max Hit Dice": 9,
+        "Spell Ability": true,
+        "Armor": "any",
+        "Sheild": "any",
+        "Weapons": "any",
+        "Oil": true,
+        "Poison": false,
+        "Proficiencies": {
+            "Initial": 3,
+            "Penalty": -2,
+            "Gain": 3
+        }
+    },
+    "Ranger": {
+        "Alignments": [
+            "Lawful Good",
+            "Neutral Good",
+            "Chaotic Good"
+        ],
+        "Min": { "str": 13, "int": 13, "wis": 14, "con": 14 },
+        "Max Level": 20,
+        "Hit Die": 8,
+        "Max Hit Dice": 10,
+        "Spell Ability": true,
+        "Armor": "any",
+        "Sheild": "any",
+        "Weapons": "any",
+        "Oil": true,
+        "Poison": false,
+        "Proficiencies": {
+            "Initial": 3,
+            "Penalty": -2,
+            "Gain": 3
+        }
+    },
+    "Magic-User": {
+        "Alignments": [
+            "Lawful Good",
+            "Neutral Good",
+            "Chaotic Good",
+            "Neutral",
+            "Chaotic Neutral",
+            "Lawful Neutral",
+            "Lawful Evil",
+            "Neutral Evil",
+            "Chaotic Evil"
+        ],
+        "Min": { "int": 9, "dex": 6 },
+        "Max Level": 20,
+        "Hit Die": 4,
+        "Max Hit Dice": 11,
+        "Spell Ability": true,
+        "Armor": "none",
+        "Sheild": "none",
+        "Weapons": "dagger, dart, staff",
+        "Oil": true,
+        "Poison": false,
+        "Proficiencies": {
+            "Initial": 1,
+            "Penalty": -5,
+            "Gain": 6
+        }
+    },
+    "Illusionist": {
+        "Alignments": [
+            "Lawful Good",
+            "Neutral Good",
+            "Chaotic Good",
+            "Neutral",
+            "Chaotic Neutral",
+            "Lawful Neutral",
+            "Lawful Evil",
+            "Neutral Evil",
+            "Chaotic Evil"
+        ],
+        "Min": { "int": 15, "dex": 16 },
+        "Max Level": 20,
+        "Hit Die": 4,
+        "Max Hit Dice": 10,
+        "Spell Ability": true,
+        "Armor": "none",
+        "Sheild": "none",
+        "Weapons": "dagger, dart, staff",
+        "Oil": true,
+        "Poison": false,
+        "Proficiencies": {
+            "Initial": 1,
+            "Penalty": -5,
+            "Gain": 6
+        }
+    },
+    "Thief": {
+        "Alignments": [
+            "Neutral",
+            "Lawful Evil",
+            "Neutral Evil",
+            "Chaotic Evil"
+        ],
+        "Min": { "dex": 9 },
+        "Max Level": 20,
+        "Hit Die": 6,
+        "Max Hit Dice": 10,
+        "Spell Ability": false,
+        "Armor": "leather",
+        "Sheild": "none",
+        "Weapons": "club, dagger, dart, sling, sword",
+        "Oil": true,
+        "Poison": false,
+        "Proficiencies": {
+            "Initial": 2,
+            "Penalty": -3,
+            "Gain": 4
+        }
+    },
+    "Assasin": {
+        "Alignments": [
+            "Lawful Evil",
+            "Neutral Evil",
+            "Chaotic Evil"
+        ],
+        "Min": { "str": 12, "int": 11, "dex": 12 },
+        "Max Level": 14,
+        "Hit Die": 6,
+        "Max Hit Dice": 15,
+        "Spell Ability": false,
+        "Armor": "leather",
+        "Sheild": "any",
+        "Weapons": "any",
+        "Oil": true,
+        "Poison": true,
+        "Proficiencies": {
+            "Initial": 3,
+            "Penalty": -2,
+            "Gain": 4
+        }
+    },
+    "Monk": {
+        "Alignments": [
+            "Lawful Good",
+            "Lawful Neutral",
+            "Lawful Evil"
+        ],
+        "Min": { "str": 15, "wis": 15, "dex": 15, "con": 11},
+        "Max Level": 17,
+        "Hit Die": 4,
+        "Max Hit Dice": 17,
+        "Spell Ability": false,
+        "Armor": "none",
+        "Sheild": "none",
+        "Weapons": "bo sticks, club, crossbow, dagger, hand axe, javelin, jo stick, pole arm, spear, staff",
+        "Oil": false,
+        "Poison": false,
+        "Proficiencies": {
+            "Initial": 1,
+            "Penalty": -3,
+            "Gain": 2
+        }
+    }
+}

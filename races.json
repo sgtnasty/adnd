@@ -1,0 +1,159 @@
+{
+    "Dwarf": {
+        "Classes": ["Fighter", "Thief", "Assasin"],
+        "Abilities": {
+            "Bonuses": { "str": 0, "int": 0, "wis": 0, "dex": 0, "con": 1, "cha": -1 },
+            "Ranges": {
+                "Min": {
+                    "M": { "str": 8, "int": 3, "wis": 3, "dex": 3, "con": 12, "cha": 3 },
+                    "F": { "str": 8, "int": 3, "wis": 3, "dex": 3, "con": 12, "cha": 3 }
+                },
+                "Max": {
+                    "M": { "str": 18, "int": 18, "wis": 18, "dex": 17, "con": 19, "cha": 16 },
+                    "F": { "str": 17, "int": 18, "wis": 18, "dex": 17, "con": 19, "cha": 16 }
+                }
+            }
+        },
+        "Special Abilities": [
+            "Magic resistance: +1 for every 3.5 Constitution score save vs. magic wands, staves, rods and spells",
+            "Exceptional Constitution: save vs. poison for injested/injected toxic substances as \"Magic resistance\"",
+            "Infravision: see up to 60' in the dark noting varying degress of heat radiation",
+            "Dwarven Miner: see PHB page 16",
+            "Goblin Bane: +1 to hit v. half-orcs, goblins, hobgoblins or orcs"
+        ],
+        "Languages": ["Dwarven", "Gnome", "Goblin", "Kobold", "Orcish", "Common"]
+    },
+    "Elf": {
+        "Classes": ["Fighter", "Magic-User", "Thief", "Assasin"],
+        "Abilities": {
+            "Bonuses": { "str": 0, "int": 0, "wis": 0, "dex": 1, "con": 1, "cha": 0 },
+            "Ranges": {
+                "Min": {
+                    "M": { "str": 3, "int": 8, "wis": 3, "dex": 7, "con": 6, "cha": 8 },
+                    "F": { "str": 3, "int": 8, "wis": 3, "dex": 7, "con": 6, "cha": 8 }
+                },
+                "Max": {
+                    "M": { "str": 18, "int": 18, "wis": 18, "dex": 19, "con": 18, "cha": 18 },
+                    "F": { "str": 16, "int": 18, "wis": 18, "dex": 19, "con": 18, "cha": 18 }
+                }
+            }
+        },
+        "Special Abilities": [
+            "Charm resistance: 90% resistance to sleep and charm spells",
+            "Natural Fighter: +1 to hit when using bow, short or long sword",
+            "Infravision: see up to 60' in the dark noting varying degress of heat radiation",
+            "Spotter: 1 in 6 chance to stumble upon secret doors, 2 in 6 if searching, 3 in 6 searching for portals",
+            "Sneaky: 4 in 6 chance to surprise if alone and not in metal armor"
+        ],
+        "Languages": ["Elvish", "Gnome", "Halfling", "Goblin", "Hobgoblin", "Orcish", "Gnoll", "Common"]
+    },
+    "Gnome": {
+        "Classes": ["Fighter", "Illusionist", "Thief", "Assasin"],
+        "Abilities": {
+            "Bonuses": { "str": 0, "int": 0, "wis": 0, "dex": 0, "con": 0, "cha": 0 },
+            "Ranges": {
+                "Min": {
+                    "M": { "str": 6, "int": 7, "wis": 3, "dex": 3, "con": 8, "cha": 3 },
+                    "F": { "str": 6, "int": 7, "wis": 3, "dex": 3, "con": 8, "cha": 3 }
+                },
+                "Max": {
+                    "M": { "str": 18, "int": 18, "wis": 18, "dex": 18, "con": 18, "cha": 18 },
+                    "F": { "str": 15, "int": 18, "wis": 18, "dex": 18, "con": 18, "cha": 18 }
+                }
+            }
+        },
+        "Special Abilities": [
+            "Magic resistance: +1 for every 3.5 Constitution score save vs. magic wands, staves, rods and spells",
+            "Infravision: see up to 60' in the dark noting varying degress of heat radiation",
+            "Gnomish Miner: see PHB page 16",
+            "Goblin Bane: +1 to hit v. kobolds and goblins"
+        ],
+        "Languages": ["Dwarven", "Gnome", "Halfling", "Goblin", "Kobold", "Common"]
+    },
+    "Half-Elf": {
+        "Classes": ["Cleric", "Druid", "Fighter", "Ranger", "Magic-User", "Thief", "Assasin"],
+        "Abilities": {
+            "Bonuses": { "str": 0, "int": 0, "wis": 0, "dex": 0, "con": 0, "cha": 0 },
+            "Ranges": {
+                "Min": {
+                    "M": { "str": 3, "int": 4, "wis": 3, "dex": 6, "con": 6, "cha": 3 },
+                    "F": { "str": 3, "int": 4, "wis": 3, "dex": 6, "con": 6, "cha": 3 }
+                },
+                "Max": {
+                    "M": { "str": 18, "int": 18, "wis": 18, "dex": 18, "con": 18, "cha": 18 },
+                    "F": { "str": 17, "int": 18, "wis": 18, "dex": 18, "con": 18, "cha": 18 }
+                }
+            }
+        },
+        "Special Abilities": [
+            "Charm resistance: 30% resistance to sleep and charm spells",
+            "Infravision: see up to 60' in the dark noting varying degress of heat radiation",
+            "Spotter: 1 in 6 chance to stumble upon secret doors, 2 in 6 if searching, 3 in 6 searching for portals"
+        ],
+        "Languages": ["Elvish", "Gnome", "Halfling", "Goblin", "Hobgoblin", "Orcish", "Gnoll", "Common"]
+    },
+    "Halfling": {
+        "Classes": ["Fighter", "Thief"],
+        "Abilities": {
+            "Bonuses": { "str": -1, "int": 0, "wis": 0, "dex": 1, "con": 0, "cha": 0 },
+            "Ranges": {
+                "Min": {
+                    "M": { "str": 6, "int": 6, "wis": 3, "dex": 8, "con": 10, "cha": 3 },
+                    "F": { "str": 6, "int": 6, "wis": 3, "dex": 8, "con": 10, "cha": 3 }
+                },
+                "Max": {
+                    "M": { "str": 17, "int": 18, "wis": 17, "dex": 18, "con": 19, "cha": 18 },
+                    "F": { "str": 14, "int": 18, "wis": 17, "dex": 18, "con": 19, "cha": 18 }
+                }
+            }
+        },
+        "Special Abilities": [
+            "Magic resistance: +1 for every 3.5 Constitution score save vs. magic wands, staves, rods and spells",
+            "Poison resistance: +1 for every 3.5 Constitution score save vs. poison",
+            "Infravision: see up to 30' (mixed blood), or 60' (Stoutish) in the dark noting varying degress of heat radiation",
+            "Notice grade: detect change in grade (see PHB page 17)",
+            "Sneaky: if alone and not in metal armor, surprise on 4 in 6"
+        ],
+        "Languages": ["Dwarven", "Elvish", "Gnome", "Goblin", "Halfling", "Orcish", "Common"]
+    },
+    "Half-Orc": {
+        "Classes": ["Cleric", "Fighter", "Thief", "Assasin"],
+        "Abilities": {
+            "Bonuses": { "str": 1, "int": 0, "wis": 0, "dex": 0, "con": 1, "cha": -2 },
+            "Ranges": {
+                "Min": {
+                    "M": { "str": 6, "int": 3, "wis": 3, "dex": 3, "con": 13, "cha": 3 },
+                    "F": { "str": 6, "int": 3, "wis": 3, "dex": 3, "con": 13, "cha": 3 }
+                },
+                "Max": {
+                    "M": { "str": 18, "int": 17, "wis": 14, "dex": 17, "con": 19, "cha": 12 },
+                    "F": { "str": 18, "int": 17, "wis": 14, "dex": 17, "con": 19, "cha": 12 }
+                }
+            }
+        },
+        "Special Abilities": [
+            "Infravision: see up to 60' in the dark noting varying degress of heat radiation"
+        ],
+        "Languages": ["Orcish", "Common"]        
+    },
+    "Human": {
+        "Classes": ["Cleric", "Druid", "Fighter", "Paladin", "Ranger", "Magic-User", "Illusionist", "Thief", "Assasin", "Monk"],
+        "Abilities": {
+            "Bonuses": { "str": 0, "int": 0, "wis": 0, "dex": 0, "con": 0, "cha": 0 },
+            "Ranges": {
+                "Min": {
+                    "M": { "str": 3, "int": 3, "wis": 3, "dex": 3, "con": 3, "cha": 3 },
+                    "F": { "str": 3, "int": 3, "wis": 3, "dex": 3, "con": 3, "cha": 3 }
+                },
+                "Max": {
+                    "M": { "str": 18, "int": 18, "wis": 18, "dex": 18, "con": 18, "cha": 18 },
+                    "F": { "str": 18, "int": 18, "wis": 18, "dex": 18, "con": 18, "cha": 18 }
+                }
+            }
+        },
+        "Special Abilities": [
+            "Limitless: No limits on class or level"
+        ],
+        "Languages": ["Common"]
+    }
+}
