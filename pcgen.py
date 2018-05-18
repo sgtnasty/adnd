@@ -25,6 +25,7 @@ def _roll3d6():
 def _roll4d6_drop_lowest():
     rolls = [_rolld6(), _rolld6(), _rolld6(), _rolld6()]
     pick = sum(rolls) - min(rolls)
+    notes.append("4d6-1d6 = {} {} {} {}".format(rolls[0], rolls[1], rolls[2], rolls[3]))
     # print("---- rolled {} => {}".format(rolls, pick))
     return pick
 
@@ -127,7 +128,8 @@ def get_hitpoints(classes_info, pc_class, pc_con, pc_level):
     pc_hp = roll + con_bonus
     if pc_level == 1:
         if pc_hp < MIN_HITPOINTS:
-            notes.append("HP less than min of {}".format(MIN_HITPOINTS))
+            notes.append("Applying MIN HP, was {} is now {}".format(pc_hp,
+                MIN_HITPOINTS))
             pc_hp = MIN_HITPOINTS
     return pc_hp
 
@@ -140,10 +142,12 @@ def apply_racial_ability(rolled_score, pc_race, ability_name, pc_gender,
     racial_max = race["Abilities"]["Ranges"]["Max"][pc_gender][ability_name]
     ability_score = rolled_score + racial_bonus
     if ability_score < racial_min:
-        notes.append("Applying racial {} min".format(ability_name))
+        notes.append("Applying racial min for {}, was {} is now {}".format(
+             ability_name.upper(), ability_score, racial_min))
         ability_score = racial_min
     if ability_score > racial_max:
-        notes.append("Applying racial {} max".format(ability_name))
+        notes.append("Applying racial max for {}, was {} is now {}".format(
+            ability_name.upper(), ability_score, racial_max))
         ability_score = racial_max
     return ability_score
 
@@ -232,7 +236,8 @@ def print_str(pc_str):
         wgt = 750
         opn = 3
         bar = 16
-    print("     Hit: {}, Dam: {}, Weight: {}, Open doors: {}/6, Bend: {}%".format(hit, dam, wgt, opn, bar))
+    print("     Hit: {}, Dam: {}, Weight: {}, Open doors: {}/6, Bend: {}%".format(
+        hit, dam, wgt, opn, bar))
 
 
 def print_str_fighter(pc_str_bonus):
@@ -271,7 +276,8 @@ def print_str_fighter(pc_str_bonus):
         wgt = 3000
         opn = 5
         bar = 40
-    print("     Hit: {}, Dam: {}, Weight: {}, Open doors: {}/6, Bend: {}%".format(hit, dam, wgt, opn, bar))
+    print("     Hit: {}, Dam: {}, Weight: {}, Open doors: {}/6, Bend: {}%".format(
+        hit, dam, wgt, opn, bar))
 
 
 def main(races, classes):
@@ -294,6 +300,7 @@ def main(races, classes):
     if len(pc_class) == 0:
         return pc_class
     if (str(pc_class) == "Fighter" and pc_str == 18):
+        notes.append("Rolling increased Strength for Fighter with 18 STR")
         pc_str_bonus = roll_high_str()
     # Determine alignment (PHB page 33)
     pc_alignment = numpy.random.choice(classes[pc_class]["Alignments"])
