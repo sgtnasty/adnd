@@ -12,6 +12,7 @@ pc_races = ['Human', 'Dwarf', 'Elf', 'Gnome', 'Half-Elf', 'Halfling',
 
 MIN_HITPOINTS = 3
 
+notes = []
 
 def _rolld6():
     return numpy.random.randint(1, 7)
@@ -82,9 +83,9 @@ def get_class(classes, race_info, pc_str, pc_int, pc_wis, pc_dex, pc_con,
         if qualify_for_class(classes[cls], pc_str, pc_int, pc_wis, pc_dex,
                              pc_con, pc_cha):
             classes_qualify.append(cls)
-            # print("#### QUALIFIED: {}".format(cls))
-        # else:
-            # print("#### NOT QUALIFIED: {}".format(cls))
+            notes.append("Qualified for {}".format(cls))
+        else:
+            notes.append("Not qualified for {}".format(cls))
     if (len(classes_qualify) < 1):
         print("***** ERROR *****")
         print("This PC does not qualify for ANY class!")
@@ -92,19 +93,6 @@ def get_class(classes, race_info, pc_str, pc_int, pc_wis, pc_dex, pc_con,
               pc_str, pc_int, pc_wis, pc_dex, pc_con, pc_cha))
         return ""
     return numpy.random.choice(classes_qualify)
-
-
-def apply_racial_abilities(rolled_stat, race_info, ability_name, gender):
-    ability_score = rolled_stat
-    bonus = race_info["Abilities"]["Bonuses"][ability_name]
-    ability_score = ability_score + bonus
-    min = race_info["Abilities"]["Ranges"]["Min"][gender][ability_name]
-    max = race_info["Abilities"]["Ranges"]["Max"][gender][ability_name]
-    if ability_score < min:
-        ability_score = min
-    if ability_score > max:
-        ability_score = max
-    return ability_score
 
 
 def get_hitpoints(classes_info, pc_class, pc_con, pc_level):
@@ -139,6 +127,7 @@ def get_hitpoints(classes_info, pc_class, pc_con, pc_level):
     pc_hp = roll + con_bonus
     if pc_level == 1:
         if pc_hp < MIN_HITPOINTS:
+            notes.append("HP less than min of {}".format(MIN_HITPOINTS))
             pc_hp = MIN_HITPOINTS
     return pc_hp
 
@@ -151,8 +140,10 @@ def apply_racial_ability(rolled_score, pc_race, ability_name, pc_gender,
     racial_max = race["Abilities"]["Ranges"]["Max"][pc_gender][ability_name]
     ability_score = rolled_score + racial_bonus
     if ability_score < racial_min:
+        notes.append("Applying racial {} min".format(ability_name))
         ability_score = racial_min
     if ability_score > racial_max:
+        notes.append("Applying racial {} max".format(ability_name))
         ability_score = racial_max
     return ability_score
 
@@ -359,6 +350,10 @@ def main(races, classes):
     power = calculate_power(pc_str, pc_int, pc_wis, pc_dex, pc_con, pc_cha,
                             pc_level, pc_hp)
     print("POWER: {}".format(power))
+    print("")
+    print("Notes:")
+    for note in notes:
+        print("    {}".format(note))
     return pc_class
 
 
