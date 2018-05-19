@@ -138,6 +138,9 @@ def apply_racial_ability(rolled_score, pc_race, ability_name, pc_gender,
                          races):
     race = races[pc_race]
     racial_bonus = race["Abilities"]["Bonuses"][ability_name]
+    if racial_bonus != 0:
+        notes.append("Applying racial bonus of {} for {}".format(racial_bonus,
+            ability_name))
     racial_min = race["Abilities"]["Ranges"]["Min"][pc_gender][ability_name]
     racial_max = race["Abilities"]["Ranges"]["Max"][pc_gender][ability_name]
     ability_score = rolled_score + racial_bonus
