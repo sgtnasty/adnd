@@ -1,22 +1,23 @@
 {
     "armor":{
-        "Banded": { "cost": 90, "base.ac": 4, "isleather": false },
-        "Chain": { "cost": 75, "base.ac": 5, "isleather": false },
-        "Leather": { "cost": 5, "base.ac": 8, "isleather": true },
-        "Padded": { "cost": 4, "base.ac": 8, "isleather": true },
-        "Plate": { "cost": 400, "base.ac": 3, "isleather": false },
-        "Ring": { "cost": 30, "base.ac": 7, "isleather": false },
-        "Scale": { "cost": 45, "base.ac": 6, "isleather": false },
-        "Splinted": { "cost": 80, "base.ac": 4, "isleather": false },
-        "Studded": { "cost": 15, "base.ac": 7, "isleather": false }
+        "Banded": { "cost": 90, "base.ac": 4, "isleather": false, "bulk": "bulky", "weight": 35, "base.move": 9 },
+        "Chain": { "cost": 75, "base.ac": 5, "isleather": false, "bulk": "fairly", "weight": 30, "base.move": 9 },
+        "Chain, Elfin": { "cost": 999, "base.ac": 5, "isleather": false, "bulk": "non", "weight": 15, "base.move": 12 },
+        "Leather": { "cost": 5, "base.ac": 8, "isleather": true, "bulk": "non", "weight": 15, "base.move": 12 },
+        "Padded": { "cost": 4, "base.ac": 8, "isleather": true, "bulk": "fairly", "weight": 10, "base.move": 9 },
+        "Plate": { "cost": 400, "base.ac": 3, "isleather": false, "bulk": "bulky", "weight": 45, "base.move": 6 },
+        "Ring": { "cost": 30, "base.ac": 7, "isleather": false, "bulk": "fairly", "weight": 25, "base.move": 9 },
+        "Scale": { "cost": 45, "base.ac": 6, "isleather": false, "bulk": "fairly", "weight": 40, "base.move": 6 },
+        "Splinted": { "cost": 80, "base.ac": 4, "isleather": false, "bulk": "bulky", "weight": 40, "base.move": 6 },
+        "Studded": { "cost": 15, "base.ac": 7, "isleather": false, "bulk": "fairly", "weight": 20, "base.move": 9 }
     },
     "helmets": {
         "Helmet, great": { "cost": 15, "ac.adj": 0, "isleather": false },
-        "Helmet, small": { "cost": 10, "ac.adj": 0, "isleather": false },
+        "Helmet, small": { "cost": 10, "ac.adj": 0, "isleather": false }
     },
     "shields": {
-        "Shield, large": { "cost": 15, "ac.adj": -1, },
-        "Sheild, small": { "cost": 10, "ac.adj": -1, },
-        "Shield, small, wooden": { "cost": 1, "ac": -1, }        
+        "Shield, large": { "cost": 15, "ac.adj": -1, "bulk": "bulky", "weight": 10 },
+        "Sheild, small": { "cost": 10, "ac.adj": -1, "bulk": "non", "weight": 5 },
+        "Shield, small, wooden": { "cost": 1, "ac": -1, "bulk": "non", "weight": 3 }
     }
 }

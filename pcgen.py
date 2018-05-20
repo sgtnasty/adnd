@@ -155,13 +155,15 @@ def apply_racial_ability(rolled_score, pc_race, ability_name, pc_gender,
     return ability_score
 
 
-def get_money(gold_dice):
+def get_money(gold_dice, multiplyer):
     parts = gold_dice.split('d')
     damt = int(parts[0])
     dtyp = int(parts[1])
+    notes.append("Starting gold: {}d{} x {}".format(damt, dtyp, multiplyer))
     gold = 0
     for d in range(damt):
         gold = gold + numpy.random.randint(1, (dtyp + 1))
+    gold = gold * multiplyer
     return gold
 
 
@@ -310,7 +312,10 @@ def main(races, classes):
     # Name
     # Languages
     # Gold
-    pc_gold = get_money(classes[pc_class]["Gold"])
+    multiplyer = 1
+    if (pc_class != "Monk"):
+        multiplyer = 10
+    pc_gold = get_money(classes[pc_class]["Gold"], multiplyer)
     # Level
     pc_level = 1
     # Hit points
@@ -359,7 +364,7 @@ def main(races, classes):
     print('Hit Points: {}'.format(pc_hp))
     power = calculate_power(pc_str, pc_int, pc_wis, pc_dex, pc_con, pc_cha,
                             pc_level, pc_hp)
-    print("POWER: {}".format(power))
+    notes.append("POWER: {}".format(power))
     print("")
     print("Notes:")
     for note in notes:
