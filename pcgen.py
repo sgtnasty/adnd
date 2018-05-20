@@ -25,7 +25,6 @@ def _roll4d6_drop_lowest():
     rolls = [_rolld6(), _rolld6(), _rolld6(), _rolld6()]
     pick = sum(rolls) - min(rolls)
     notes.append("4d6-1d6 = {} {} {} {}".format(rolls[0], rolls[1], rolls[2], rolls[3]))
-    # print("---- rolled {} => {}".format(rolls, pick))
     return pick
 
 
@@ -212,8 +211,6 @@ def print_header():
 
 def create_pc(races, classes, level=1, name="", player_name = ""):
     pc = ADnDCharacter()
-    pc.pcname = name
-    pc.playername = player_name
     # Determine abilities (PHB page 9)
     pc.abilities = get_abilities()
     # Determine race (PHB page 13)
@@ -253,6 +250,8 @@ def create_pc(races, classes, level=1, name="", player_name = ""):
     # Determine alignment (PHB page 33)
     pc.alignment = numpy.random.choice(classes[pc.classname]["Alignments"])
     # Name
+    pc.pcname = name
+    pc.playername = player_name
     # Languages
     # Gold
     pc.gold = get_money(pc)

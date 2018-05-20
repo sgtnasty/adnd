@@ -1,8 +1,14 @@
 {
     "Axe, battle": {
-        "cost": 0.1, "weight": 75, "dam.sm": "1d8", "dam.l": "1d8", "len": 4, "space": 7, "speed": 7, 
+        "cost": 5, "weight": 75, "dam.sm": "1d8", "dam.l": "1d8", "len": 4, "space": 7, "speed": 7, 
         "ac.adjust": {
             "2": -3, "3": -2, "4": -1, "5": -1, "6": 0, "7": 0, "8": 1, "9": 1, "10": 2
         }
+    },
+    "Axe, hand or throwing": {
+        "cost": 1, "weight": 50, "dam.sm": "1d6", "dam.l": "1d4", "len": 1.5, "space": 1, "speed": 4,
+        "ac.adjust": {
+            "2": -3, "3": -2, "4": -2, "5": -1, "6": 0, "7": 0, "8": 1, "9": 1, "10": 1
+        }        
     }
 }
