@@ -197,110 +197,6 @@ def print_header():
     print("################################################################################")
 
 
-def print_str(pc_str):
-    hit = -3
-    dam = -1
-    wgt = -350
-    opn = 1
-    bar = 0.0
-    if pc_str > 3:
-        hit = -2
-        dam = -1
-        wgt = -250
-        opn = 1
-        bar = 0
-    if pc_str > 5:
-        hit = -1
-        dam = 0
-        wgt = -150
-        opn = 1
-        bar = 0
-    if pc_str > 7:
-        hit = 0
-        dam = 0
-        wgt = 0
-        opn = 2
-        bar = 1
-    if pc_str > 9:
-        hit = 0
-        dam = 0
-        wgt = 0
-        opn = 2
-        bar = 2
-    if pc_str > 11:
-        hit = 0
-        dam = 0
-        wgt = 100
-        opn = 2
-        bar = 4
-    if pc_str > 13:
-        hit = 0
-        dam = 0
-        wgt = 200
-        opn = 2
-        bar = 7
-    if pc_str > 15:
-        hit = 0
-        dam = 1
-        wgt = 350
-        opn = 3
-        bar = 10
-    if pc_str > 16:
-        hit = 1
-        dam = 1
-        wgt = 500
-        opn = 3
-        bar = 13
-    if pc_str > 17:
-        hit = 1
-        dam = 2
-        wgt = 750
-        opn = 3
-        bar = 16
-    print("     Hit: {}, Dam: {}, Weight: {}, Open doors: {}/6, Bend: {}%".format(
-        hit, dam, wgt, opn, bar))
-
-
-def print_str_fighter(pc_str_bonus):
-    hit = 1
-    dam = 3
-    wgt = 1000
-    opn = 3
-    bar = 20.0
-    if pc_str_bonus > 0:
-        hit = 1
-        dam = 3
-        wgt = 1000
-        opn = 3
-        bar = 20
-    if pc_str_bonus > 50:
-        hit = 2
-        dam = 3
-        wgt = 1250
-        opn = 4
-        bar = 25
-    if pc_str_bonus > 75:
-        hit = 2
-        dam = 4
-        wgt = 1500
-        opn = 4
-        bar = 30
-    if pc_str_bonus > 90:
-        hit = 2
-        dam = 5
-        wgt = 2000
-        opn = 4
-        bar = 35
-    if pc_str_bonus > 99:
-        hit = 3
-        dam = 6
-        wgt = 3000
-        opn = 5
-        bar = 40
-    print("     Hit: {}, Dam: {}, Weight: {}, Open doors: {}/6, Bend: {}%".format(
-        hit, dam, wgt, opn, bar))
-
-
 def main(races, classes):
     pc = ADnDCharacter()
     # Determine abilities (PHB page 9)
@@ -312,6 +208,7 @@ def main(races, classes):
     # apply racial bonuses to abilities
     pc.abilities.Strength = apply_racial_ability(pc, 'str')
     pc.FighterStrengthBonus = 0
+    # pc.abilities.Strength = 18
     pc.abilities.Intelligence = apply_racial_ability(pc, 'int')
     pc.abilities.Wisdom = apply_racial_ability(pc, 'wis')
     pc.abilities.Dexterity = apply_racial_ability(pc, 'dex')
@@ -324,7 +221,7 @@ def main(races, classes):
     pc.class_info = classes[pc.classname]
     if (str(pc.classname) == "Fighter" and pc.abilities.STR() == 18):
         notes.append("Rolling increased Strength for Fighter with 18 STR")
-        pc.FighterStrengthBonus = roll_high_str()
+        pc.abilities.FighterStrengthBonus = roll_high_str()
     # Determine alignment (PHB page 33)
     pc.alignment = numpy.random.choice(classes[pc.classname]["Alignments"])
     # Name
@@ -347,17 +244,28 @@ def main(races, classes):
     print('Alignment: {}'.format(pc.alignment))
     print("")
     print("Abilities:")
+    str_descr = pc.abilities.descr_str(pc.classname == "Fighter")
     if (str(pc.classname) == "Fighter" and pc.abilities.STR() == 18):
         print('Str: {}/{}'.format(pc.abilities.STR(), pc.abilities.STRB()))
-        print_str_fighter(pc)
+        str_descr = pc.abilities.descr_str(isFighter=True)        
+        print("    {}".format(str_descr))
     else:
         print('Str: {}'.format(pc.abilities.STR()))
-        print_str(pc.abilities.STR())
+        str_descr = pc.abilities.descr_str() 
+        print("    {}".format(str_descr))
     print('Int: {}'.format(pc.abilities.INT()))
+    if pc.classname == "Magic-User":
+        print("    {}".format(pc.abilities.descr_int(isMagicUser=True)))
+    else:
+        print("    {}".format(pc.abilities.descr_int()))
     print('Wis: {}'.format(pc.abilities.WIS()))
+    print("    {}".format(pc.abilities.descr_wis()))
     print('Dex: {}'.format(pc.abilities.DEX()))
+    print("    {}".format(pc.abilities.descr_dex()))
     print('Con: {}'.format(pc.abilities.CON()))
+    print("    {}".format(pc.abilities.descr_con()))
     print('Cha: {}'.format(pc.abilities.CHA()))
+    print("    {}".format(pc.abilities.descr_cha()))
     print("")
     print("Racial Special Abilities:")
     for sa in pc.racial_info["Special Abilities"]:
