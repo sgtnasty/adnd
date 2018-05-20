@@ -1,6 +1,6 @@
 {
     "Dwarf": {
-        "Classes": ["Fighter", "Thief", "Assasin"],
+        "Classes": ["Fighter", "Thief", "Assassin"],
         "Abilities": {
             "Bonuses": { "str": 0, "int": 0, "wis": 0, "dex": 0, "con": 1, "cha": -1 },
             "Ranges": {
@@ -24,7 +24,7 @@
         "Languages": ["Dwarven", "Gnome", "Goblin", "Kobold", "Orcish", "Common"]
     },
     "Elf": {
-        "Classes": ["Fighter", "Magic-User", "Thief", "Assasin"],
+        "Classes": ["Fighter", "Magic-User", "Thief", "Assassin"],
         "Abilities": {
             "Bonuses": { "str": 0, "int": 0, "wis": 0, "dex": 1, "con": 1, "cha": 0 },
             "Ranges": {
@@ -48,7 +48,7 @@
         "Languages": ["Elvish", "Gnome", "Halfling", "Goblin", "Hobgoblin", "Orcish", "Gnoll", "Common"]
     },
     "Gnome": {
-        "Classes": ["Fighter", "Illusionist", "Thief", "Assasin"],
+        "Classes": ["Fighter", "Illusionist", "Thief", "Assassin"],
         "Abilities": {
             "Bonuses": { "str": 0, "int": 0, "wis": 0, "dex": 0, "con": 0, "cha": 0 },
             "Ranges": {
@@ -71,7 +71,7 @@
         "Languages": ["Dwarven", "Gnome", "Halfling", "Goblin", "Kobold", "Common"]
     },
     "Half-Elf": {
-        "Classes": ["Cleric", "Druid", "Fighter", "Ranger", "Magic-User", "Thief", "Assasin"],
+        "Classes": ["Cleric", "Druid", "Fighter", "Ranger", "Magic-User", "Thief", "Assassin"],
         "Abilities": {
             "Bonuses": { "str": 0, "int": 0, "wis": 0, "dex": 0, "con": 0, "cha": 0 },
             "Ranges": {
@@ -117,7 +117,7 @@
         "Languages": ["Dwarven", "Elvish", "Gnome", "Goblin", "Halfling", "Orcish", "Common"]
     },
     "Half-Orc": {
-        "Classes": ["Cleric", "Fighter", "Thief", "Assasin"],
+        "Classes": ["Cleric", "Fighter", "Thief", "Assassin"],
         "Abilities": {
             "Bonuses": { "str": 1, "int": 0, "wis": 0, "dex": 0, "con": 1, "cha": -2 },
             "Ranges": {
@@ -137,7 +137,7 @@
         "Languages": ["Orcish", "Common"]        
     },
     "Human": {
-        "Classes": ["Cleric", "Druid", "Fighter", "Paladin", "Ranger", "Magic-User", "Illusionist", "Thief", "Assasin", "Monk"],
+        "Classes": ["Cleric", "Druid", "Fighter", "Paladin", "Ranger", "Magic-User", "Illusionist", "Thief", "Assassin", "Monk"],
         "Abilities": {
             "Bonuses": { "str": 0, "int": 0, "wis": 0, "dex": 0, "con": 0, "cha": 0 },
             "Ranges": {

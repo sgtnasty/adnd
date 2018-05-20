@@ -104,8 +104,6 @@ def get_class(classes, pc):
     if (len(classes_qualify) < 1):
         print("***** ERROR *****")
         print("This PC does not qualify for ANY class!")
-        print("Str: {}  Int: {}  Wis: {}  Dex: {}  Con: {}  Cha: {}".format(
-              pc_str, pc_int, pc_wis, pc_dex, pc_con, pc_cha))
         return ""
     return numpy.random.choice(classes_qualify)
 
@@ -169,9 +167,9 @@ def apply_racial_ability(pc, ability_name):
 
 def get_money(pc):
     gold_dice = pc.class_info["Gold"]
-    multiplyer = 1
-    if pc.classname != "Monk":
-        multiplyer = 10
+    multiplyer = 10
+    if pc.isMonk:
+        multiplyer = 1
     parts = gold_dice.split('d')
     damt = int(parts[0])
     dtyp = int(parts[1])
@@ -207,8 +205,6 @@ def main(races, classes):
     pc.racial_info = races[pc.race]
     # apply racial bonuses to abilities
     pc.abilities.Strength = apply_racial_ability(pc, 'str')
-    pc.FighterStrengthBonus = 0
-    # pc.abilities.Strength = 18
     pc.abilities.Intelligence = apply_racial_ability(pc, 'int')
     pc.abilities.Wisdom = apply_racial_ability(pc, 'wis')
     pc.abilities.Dexterity = apply_racial_ability(pc, 'dex')
@@ -216,10 +212,22 @@ def main(races, classes):
     pc.abilities.Charisma = apply_racial_ability(pc, 'cha')
     # Determine class (PHB page 18)
     pc.classname = get_class(classes, pc)
+    cn = str(pc.classname)
+    pc.isFighter = ((cn == "Fighter") or (cn == "Paladin") or (cn == "Ranger"))
+    pc.isCleric = ((cn == "Cleric") or (cn == "Druid"))
+    pc.isMagicUser = ((cn == "Magic-User") or (cn == "Illusionist"))
+    pc.isThief = ((cn == "Thief") or (cn == "Assassin"))
+    pc.isMonk = (cn == "Monk")
+    notes.append("isFighter={}".format(pc.isFighter))
+    notes.append("isCleric={}".format(pc.isCleric))
+    notes.append("isMagicUser={}".format(pc.isMagicUser))
+    notes.append("isThief={}".format(pc.isThief))
+    notes.append("isMonk={}".format(pc.isMonk))
     if len(pc.classname) == 0:
         return pc.classname
     pc.class_info = classes[pc.classname]
-    if (str(pc.classname) == "Fighter" and pc.abilities.STR() == 18):
+    pc.abilities.Strength = 18
+    if (pc.isFighter and pc.abilities.STR() == 18):
         notes.append("Rolling increased Strength for Fighter with 18 STR")
         pc.abilities.FighterStrengthBonus = roll_high_str()
     # Determine alignment (PHB page 33)
@@ -227,9 +235,6 @@ def main(races, classes):
     # Name
     # Languages
     # Gold
-    multiplyer = 1
-    if (pc.classname != "Monk"):
-        multiplyer = 10
     pc.gold = get_money(pc)
     # Level
     pc.level = 1
@@ -244,26 +249,19 @@ def main(races, classes):
     print('Alignment: {}'.format(pc.alignment))
     print("")
     print("Abilities:")
-    str_descr = pc.abilities.descr_str(pc.classname == "Fighter")
-    if (str(pc.classname) == "Fighter" and pc.abilities.STR() == 18):
-        print('Str: {}/{}'.format(pc.abilities.STR(), pc.abilities.STRB()))
-        str_descr = pc.abilities.descr_str(isFighter=True)        
-        print("    {}".format(str_descr))
+    if (pc.isFighter and pc.abilities.STR() >= 18):
+        print('Str: {} / {}%'.format(pc.abilities.STR(), pc.abilities.STRB()))
     else:
         print('Str: {}'.format(pc.abilities.STR()))
-        str_descr = pc.abilities.descr_str() 
-        print("    {}".format(str_descr))
+    print("    {}".format(pc.abilities.descr_str(isFighter=pc.isFighter)))
     print('Int: {}'.format(pc.abilities.INT()))
-    if pc.classname == "Magic-User":
-        print("    {}".format(pc.abilities.descr_int(isMagicUser=True)))
-    else:
-        print("    {}".format(pc.abilities.descr_int()))
+    print("    {}".format(pc.abilities.descr_int(isMagicUser=pc.isMagicUser)))
     print('Wis: {}'.format(pc.abilities.WIS()))
-    print("    {}".format(pc.abilities.descr_wis()))
+    print("    {}".format(pc.abilities.descr_wis(isCleric=pc.isCleric)))
     print('Dex: {}'.format(pc.abilities.DEX()))
-    print("    {}".format(pc.abilities.descr_dex()))
+    print("    {}".format(pc.abilities.descr_dex(isThief=pc.isThief)))
     print('Con: {}'.format(pc.abilities.CON()))
-    print("    {}".format(pc.abilities.descr_con()))
+    print("    {}".format(pc.abilities.descr_con(isFighter=pc.isFighter)))
     print('Cha: {}'.format(pc.abilities.CHA()))
     print("    {}".format(pc.abilities.descr_cha()))
     print("")
@@ -302,6 +300,7 @@ def search_for_class(races, classes, desired_class):
     iters = 0
     while True:
         c = main(races, classes)
+        del notes[:]
         iters = iters + 1
         print(" ")
         print(" ")
