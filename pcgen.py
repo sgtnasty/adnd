@@ -308,6 +308,10 @@ def print_pc(pc, with_notes=False):
     print('Languages: {}'.format(" ".join(pc.racial_info["Languages"])))
     print('Starting GP: {}'.format(pc.gold))
     print('Hit Points: {}'.format(pc.hitpoints))
+    print('ARMOR')
+    for armor in pc.armor_list:
+        print("   {}".format(armor))
+    print('WEAPONS')
     power = calculate_power(pc)
     notes.append("POWER: {}".format(power))
     print("")
@@ -318,13 +322,74 @@ def print_pc(pc, with_notes=False):
     return pc.classname
 
 
-def main(races, classes):
+def pick_fighter_armor(pc, armor_list, helmets, shields, budget):
+    armor = []
+    ab = budget
+    hb = 0
+    sb = 0
+    if budget >= 40:
+        ab = budget / 2
+        hb = budget / 4
+        sb = budget - ab - hb
+    notes.append("Armor budget: {}, Helm: {}, Shield {}".format(ab, hb, sb))
+    if ab >= 400:
+        armor.append("Plate")
+    elif ab >= 90:
+        armor.append("Banded")
+    elif ab >= 80:
+        armor.append("Splinted")
+    elif ab >= 75:
+        armor.append("Chain")
+    elif ab >= 45:
+        armor.append("Scale")
+    elif ab >= 30:
+        armor.append("Ring")
+    elif ab >= 15:
+        armor.append("Studded")
+    elif ab >= 5:
+        armor.append("Leather")
+    elif ab >= 4:
+        armor.append("Padded")
+    return armor
+
+
+def pick_armor(pc, armor_list):
+    armors = armor_list["armor"]
+    helmets = armor_list["helmets"]
+    shields = armor_list["shields"]
+    # only spend 1/2 gold on Armor
+    budget = int(pc.gold / 2)
+    notes.append('Armor budget is {} gold'.format(budget))
+    if pc.isFighter:
+        pc.armor_list = pick_fighter_armor(pc, armors, helmets, shields, budget)
+    elif pc.isCleric:
+        #pick_fighter_armor(pc, armors, budget)
+        pass
+    elif pc.isMagicUser:
+        #pick_fighter_armor(pc, armors, budget)
+        pass
+    elif pc.isThief:
+        #pick_fighter_armor(pc, armors, budget)
+        pass
+    elif pc.isMonk:
+        #pick_fighter_armor(pc, armors, budget)
+        pass
+    return
+
+
+def pick_weapons(pc, weapon_list):
+    pass
+
+
+def main(races, classes, armor_list, weapon_list):
     pc = create_pc(races, classes, level=1)
+    pick_armor(pc, armor_list)
+    pick_weapons(pc, weapon_list)
     print_pc(pc, with_notes=True)
     return pc.classname
 
 
-def search_for_class(races, classes, desired_class):
+def search_for_class(races, classes, armor_list, weapons_list, desired_class):
     c = ""
     iters = 0
     while True:
@@ -344,7 +409,11 @@ if __name__ == '__main__':
     races = json.load(races_file)
     classes_file = open('classes.json')
     classes = json.load(classes_file)
+    armors_file = open('armor.json')
+    armor_list = json.load(armors_file)
+    weapons_file = open('weapons.json')
+    weapons_list = json.load(weapons_file)
     if len(sys.argv) > 1:
-        search_for_class(races, classes, sys.argv[1])
+        search_for_class(races, classes, armor_list, weapons_list, sys.argv[1])
     else:
-        main(races, classes)
+        main(races, classes, armor_list, weapons_list)

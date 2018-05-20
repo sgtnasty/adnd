@@ -2,7 +2,7 @@
     "armor":{
         "Banded": { "cost": 90, "base.ac": 4, "isleather": false, "bulk": "bulky", "weight": 35, "base.move": 9 },
         "Chain": { "cost": 75, "base.ac": 5, "isleather": false, "bulk": "fairly", "weight": 30, "base.move": 9 },
-        "Chain, Elfin": { "cost": 999, "base.ac": 5, "isleather": false, "bulk": "non", "weight": 15, "base.move": 12 },
+        "Chain, Elfin": { "cost": 999999, "base.ac": 5, "isleather": false, "bulk": "non", "weight": 15, "base.move": 12 },
         "Leather": { "cost": 5, "base.ac": 8, "isleather": true, "bulk": "non", "weight": 15, "base.move": 12 },
         "Padded": { "cost": 4, "base.ac": 8, "isleather": true, "bulk": "fairly", "weight": 10, "base.move": 9 },
         "Plate": { "cost": 400, "base.ac": 3, "isleather": false, "bulk": "bulky", "weight": 45, "base.move": 6 },

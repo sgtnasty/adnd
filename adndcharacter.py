@@ -427,4 +427,6 @@ class ADnDCharacter(object):
         self.isMagicUser = False
         self.isThief = False
         self.isMonk = False
+        self.armor_list = []
+        self.weapon_list = []
 
