@@ -4,15 +4,14 @@
 import sys
 import numpy.random
 import json
+from adndcharacter import ADnDAbilities, ADnDCharacter
 
 
-pc_races = ['Human', 'Dwarf', 'Elf', 'Gnome', 'Half-Elf', 'Halfling',
+PC_RACES = ['Human', 'Dwarf', 'Elf', 'Gnome', 'Half-Elf', 'Halfling',
             'Half-Orc']
-
-
 MIN_HITPOINTS = 3
-
 notes = []
+
 
 def _rolld6():
     return numpy.random.randint(1, 7)
@@ -35,54 +34,69 @@ def roll_high_str():
 
 
 def get_abilities():
-    pc_str = _roll4d6_drop_lowest()
-    pc_int = _roll4d6_drop_lowest()
-    pc_wis = _roll4d6_drop_lowest()
-    pc_dex = _roll4d6_drop_lowest()
-    pc_con = _roll4d6_drop_lowest()
-    pc_cha = _roll4d6_drop_lowest()
-    return [pc_str, pc_int, pc_wis, pc_dex, pc_con, pc_cha]
+    abilities = ADnDAbilities()
+    abilities.Strength = _roll4d6_drop_lowest()
+    abilities.Intelligence = _roll4d6_drop_lowest()
+    abilities.Wisdom = _roll4d6_drop_lowest()
+    abilities.Dexterity = _roll4d6_drop_lowest()
+    abilities.Constitution = _roll4d6_drop_lowest()
+    abilities.Charisma = _roll4d6_drop_lowest()
+    return abilities
 
 
 def get_race(races):
     # p1 = [0.4, 0.125, 0.125, 0.09, 0.15, 0.1, 0.01]
     # p2 = [0.4, 0.125, 0.125, 0.05, 0.2, 0.09, 0.01]
-    # rname = numpy.random.choice(pc_races, p=p2)
-    rname = numpy.random.choice(pc_races)
+    # rname = numpy.random.choice(PC_RACES, p=p2)
+    rname = numpy.random.choice(PC_RACES)
     return rname
 
 
-def qualify_for_class(class_info, pc_str, pc_int, pc_wis, pc_dex, pc_con,
-                      pc_cha):
+def qualify_for_class(class_info, abilities):
     mins = class_info["Min"]
     if "str" in mins:
-        if pc_str < mins["str"]:
+        if abilities.STR() < mins["str"]:
             return False
     if "int" in mins:
-        if pc_int < mins["int"]:
+        if abilities.INT() < mins["int"]:
             return False
     if "wis" in mins:
-        if pc_wis < mins["wis"]:
+        if abilities.WIS() < mins["wis"]:
             return False
     if "dex" in mins:
-        if pc_dex < mins["dex"]:
+        if abilities.DEX() < mins["dex"]:
             return False
     if "con" in mins:
-        if pc_con < mins["con"]:
+        if abilities.CON() < mins["con"]:
             return False
     if "cha" in mins:
-        if pc_cha < mins["cha"]:
+        if abilities.CHA() < mins["cha"]:
             return False
     return True
 
 
-def get_class(classes, race_info, pc_str, pc_int, pc_wis, pc_dex, pc_con,
-              pc_cha):
-    classes_available = race_info["Classes"]
+def get_class(classes, pc):
+    """
+    Abilitiy best suited for class:
+    str: fighter
+    int: magic-user
+    wis: cleric
+    dex: thief
+    con:
+    cha: 
+
+    wis/cha: druid
+    str/wis/cha: paladin
+    str/int/wis/con: ranger
+    int/dex: illusionist
+    str/int/dex: assasin
+    str/wis/dex/con: monk
+
+    """
+    classes_available = pc.racial_info["Classes"]
     classes_qualify = []
     for cls in classes_available:
-        if qualify_for_class(classes[cls], pc_str, pc_int, pc_wis, pc_dex,
-                             pc_con, pc_cha):
+        if qualify_for_class(classes[cls], pc.abilities):
             classes_qualify.append(cls)
             notes.append("Qualified for {}".format(cls))
         else:
@@ -96,37 +110,37 @@ def get_class(classes, race_info, pc_str, pc_int, pc_wis, pc_dex, pc_con,
     return numpy.random.choice(classes_qualify)
 
 
-def get_hitpoints(classes_info, pc_class, pc_con, pc_level):
-    hit_die = classes_info[pc_class]["Hit Die"] + 1
+def get_hitpoints(pc):
+    hit_die = pc.class_info["Hit Die"] + 1
     roll = numpy.random.randint(1, hit_die)
-    if pc_level == 1:
-        if pc_class is "Ranger":
+    if pc.level == 1:
+        if pc.classname == "Ranger":
             roll = roll + numpy.random.randint(1, hit_die)
-        if pc_class is "Monk":
+        if pc.classname == "Monk":
             roll = roll + numpy.random.randint(1, hit_die)
     con_bonus = 0
-    if pc_con == 3:
+    if pc.abilities.CON() == 3:
         con_bonus = -2
-    if pc_con == 4:
+    if pc.abilities.CON() == 4:
         con_bonus = -1
-    if pc_con == 5:
+    if pc.abilities.CON() == 5:
         con_bonus = -1
-    if pc_con == 6:
+    if pc.abilities.CON() == 6:
         con_bonus = -1
-    if pc_con == 15:
+    if pc.abilities.CON() == 15:
         con_bonus = 1
-    if pc_con == 16:
+    if pc.abilities.CON() == 16:
         con_bonus = 2
-    if pc_con == 17:
+    if pc.abilities.CON() == 17:
         con_bonus = 2
-        if pc_class is "Fighter":
+        if pc.classname == "Fighter":
             con_bonus = 3
-    if pc_con == 18:
+    if pc.abilities.CON() == 18:
         con_bonus = 3
-        if pc_class is "Fighter":
+        if pc.classname == "Fighter":
             con_bonus = 4
     pc_hp = roll + con_bonus
-    if pc_level == 1:
+    if pc.level == 1:
         if pc_hp < MIN_HITPOINTS:
             notes.append("Applying MIN HP, was {} is now {}".format(pc_hp,
                 MIN_HITPOINTS))
@@ -134,16 +148,14 @@ def get_hitpoints(classes_info, pc_class, pc_con, pc_level):
     return pc_hp
 
 
-def apply_racial_ability(rolled_score, pc_race, ability_name, pc_gender,
-                         races):
-    race = races[pc_race]
-    racial_bonus = race["Abilities"]["Bonuses"][ability_name]
+def apply_racial_ability(pc, ability_name):
+    racial_bonus = pc.racial_info["Abilities"]["Bonuses"][ability_name]
     if racial_bonus != 0:
         notes.append("Applying racial bonus of {} for {}".format(racial_bonus,
             ability_name))
-    racial_min = race["Abilities"]["Ranges"]["Min"][pc_gender][ability_name]
-    racial_max = race["Abilities"]["Ranges"]["Max"][pc_gender][ability_name]
-    ability_score = rolled_score + racial_bonus
+    racial_min = pc.racial_info["Abilities"]["Ranges"]["Min"][pc.gender][ability_name]
+    racial_max = pc.racial_info["Abilities"]["Ranges"]["Max"][pc.gender][ability_name]
+    ability_score = pc.abilities.get_by_name(ability_name) + racial_bonus
     if ability_score < racial_min:
         notes.append("Applying racial min for {}, was {} is now {}".format(
              ability_name.upper(), ability_score, racial_min))
@@ -155,7 +167,11 @@ def apply_racial_ability(rolled_score, pc_race, ability_name, pc_gender,
     return ability_score
 
 
-def get_money(gold_dice, multiplyer):
+def get_money(pc):
+    gold_dice = pc.class_info["Gold"]
+    multiplyer = 1
+    if pc.classname != "Monk":
+        multiplyer = 10
     parts = gold_dice.split('d')
     damt = int(parts[0])
     dtyp = int(parts[1])
@@ -167,11 +183,11 @@ def get_money(gold_dice, multiplyer):
     return gold
 
 
-def calculate_power(pc_str, pc_int, pc_wis, pc_dex, pc_con, pc_cha, pc_level,
-                    hp):
-    attrs = pc_str + pc_int + pc_wis + pc_dex + pc_con + pc_cha
+def calculate_power(pc):
+    attrs = pc.abilities.STR() + pc.abilities.INT() + pc.abilities.WIS() + \
+        pc.abilities.DEX() + pc.abilities.CON() + pc.abilities.CHA()
     avg = attrs / 6
-    power = (avg * pc_level) + hp
+    power = (avg * pc.level) + pc.hitpoints
     return power
 
 
@@ -286,90 +302,91 @@ def print_str_fighter(pc_str_bonus):
 
 
 def main(races, classes):
+    pc = ADnDCharacter()
     # Determine abilities (PHB page 9)
-    attrs = get_abilities()
+    pc.abilities = get_abilities()
     # Determine race (PHB page 13)
-    pc_gender = numpy.random.choice(['M', 'F'])
-    pc_race = get_race(races)
+    pc.gender = numpy.random.choice(['M', 'F'])
+    pc.race = get_race(races)
+    pc.racial_info = races[pc.race]
     # apply racial bonuses to abilities
-    pc_str = apply_racial_ability(attrs[0], pc_race, 'str', pc_gender, races)
-    pc_str_bonus = 0
-    pc_int = apply_racial_ability(attrs[1], pc_race, 'int', pc_gender, races)
-    pc_wis = apply_racial_ability(attrs[2], pc_race, 'wis', pc_gender, races)
-    pc_dex = apply_racial_ability(attrs[3], pc_race, 'dex', pc_gender, races)
-    pc_con = apply_racial_ability(attrs[4], pc_race, 'con', pc_gender, races)
-    pc_cha = apply_racial_ability(attrs[5], pc_race, 'cha', pc_gender, races)
+    pc.abilities.Strength = apply_racial_ability(pc, 'str')
+    pc.FighterStrengthBonus = 0
+    pc.abilities.Intelligence = apply_racial_ability(pc, 'int')
+    pc.abilities.Wisdom = apply_racial_ability(pc, 'wis')
+    pc.abilities.Dexterity = apply_racial_ability(pc, 'dex')
+    pc.abilities.Constitution = apply_racial_ability(pc, 'con')
+    pc.abilities.Charisma = apply_racial_ability(pc, 'cha')
     # Determine class (PHB page 18)
-    pc_class = get_class(classes, races[pc_race], pc_str, pc_int, pc_wis,
-                         pc_dex, pc_con, pc_cha)
-    if len(pc_class) == 0:
-        return pc_class
-    if (str(pc_class) == "Fighter" and pc_str == 18):
+    pc.classname = get_class(classes, pc)
+    if len(pc.classname) == 0:
+        return pc.classname
+    pc.class_info = classes[pc.classname]
+    if (str(pc.classname) == "Fighter" and pc.abilities.STR() == 18):
         notes.append("Rolling increased Strength for Fighter with 18 STR")
-        pc_str_bonus = roll_high_str()
+        pc.FighterStrengthBonus = roll_high_str()
     # Determine alignment (PHB page 33)
-    pc_alignment = numpy.random.choice(classes[pc_class]["Alignments"])
+    pc.alignment = numpy.random.choice(classes[pc.classname]["Alignments"])
     # Name
     # Languages
     # Gold
     multiplyer = 1
-    if (pc_class != "Monk"):
+    if (pc.classname != "Monk"):
         multiplyer = 10
-    pc_gold = get_money(classes[pc_class]["Gold"], multiplyer)
+    pc.gold = get_money(pc)
     # Level
-    pc_level = 1
+    pc.level = 1
     # Hit points
-    pc_hp = get_hitpoints(classes, pc_class, attrs[4], pc_level)
+    pc.hitpoints = get_hitpoints(pc)
     # PRINT
     print_header()
     print("Player: _______________________________")
     print("Name:   _______________________________")
-    print('Race: {} ({})'.format(pc_race, pc_gender))
-    print("Level {} {}".format(pc_level, pc_class))
-    print('Alignment: {}'.format(pc_alignment))
+    print('Race: {} ({})'.format(pc.race, pc.gender))
+    print("Level {} {}".format(pc.level, pc.classname))
+    print('Alignment: {}'.format(pc.alignment))
     print("")
     print("Abilities:")
-    if (str(pc_class) == "Fighter" and pc_str == 18):
-        print('Str: {}/{}'.format(pc_str, pc_str_bonus))
-        print_str_fighter(pc_str_bonus)
+    if (str(pc.classname) == "Fighter" and pc.abilities.STR() == 18):
+        print('Str: {}/{}'.format(pc.abilities.STR(), pc.abilities.STRB()))
+        print_str_fighter(pc)
     else:
-        print('Str: {}'.format(pc_str))
-        print_str(pc_str)
-    print('Int: {}'.format(pc_int))
-    print('Wis: {}'.format(pc_wis))
-    print('Dex: {}'.format(pc_dex))
-    print('Con: {}'.format(pc_con))
-    print('Cha: {}'.format(pc_cha))
+        print('Str: {}'.format(pc.abilities.STR()))
+        print_str(pc.abilities.STR())
+    print('Int: {}'.format(pc.abilities.INT()))
+    print('Wis: {}'.format(pc.abilities.WIS()))
+    print('Dex: {}'.format(pc.abilities.DEX()))
+    print('Con: {}'.format(pc.abilities.CON()))
+    print('Cha: {}'.format(pc.abilities.CHA()))
     print("")
     print("Racial Special Abilities:")
-    for sa in races[pc_race]["Special Abilities"]:
+    for sa in pc.racial_info["Special Abilities"]:
         print("  {}".format(sa))
-    clsinfo = classes[pc_class]
+    # clsinfo = classes[pc.classname]
     print("")
     print('Class Specific Weapons and Armor')
-    print('  Armor allowed: {}'.format(clsinfo["Armor"]))
-    print('  Shield allowed: {}'.format(clsinfo["Sheild"]))
-    print('  Weapons allowed: {}'.format(clsinfo["Weapons"]))
+    print('  Armor allowed: {}'.format(pc.class_info["Armor"]))
+    print('  Shield allowed: {}'.format(pc.class_info["Sheild"]))
+    print('  Weapons allowed: {}'.format(pc.class_info["Weapons"]))
     print("")
     print('Weapon Proficiencies:')
     print('  Initial # of Weapons: {}'.format(
-        clsinfo["Proficiencies"]["Initial"]))
+        pc.class_info["Proficiencies"]["Initial"]))
     print('  Non-proficiency penalty: {}'.format(
-        clsinfo["Proficiencies"]["Penalty"]))
+        pc.class_info["Proficiencies"]["Penalty"]))
     print('  Added proficiency: 1/{} levels'.format(
-        clsinfo["Proficiencies"]["Gain"]))
+        pc.class_info["Proficiencies"]["Gain"]))
     print("")
-    print('Languages: {}'.format(" ".join(races[pc_race]["Languages"])))
-    print('Starting GP: {}'.format(pc_gold))
-    print('Hit Points: {}'.format(pc_hp))
-    power = calculate_power(pc_str, pc_int, pc_wis, pc_dex, pc_con, pc_cha,
-                            pc_level, pc_hp)
+    print('Languages: {}'.format(" ".join(pc.racial_info["Languages"])))
+    print('Starting GP: {}'.format(pc.gold))
+    print('Hit Points: {}'.format(pc.hitpoints))
+    power = calculate_power(pc)
     notes.append("POWER: {}".format(power))
     print("")
     print("Notes:")
     for note in notes:
         print("    {}".format(note))
-    return pc_class
+    return pc.classname
 
 
 def search_for_class(races, classes, desired_class):
