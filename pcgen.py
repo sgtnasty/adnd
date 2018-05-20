@@ -195,8 +195,10 @@ def print_header():
     print("################################################################################")
 
 
-def main(races, classes):
+def create_pc(races, classes, level=1, name="", player_name = ""):
     pc = ADnDCharacter()
+    pc.pcname = name
+    pc.playername = player_name
     # Determine abilities (PHB page 9)
     pc.abilities = get_abilities()
     # Determine race (PHB page 13)
@@ -240,10 +242,13 @@ def main(races, classes):
     pc.level = 1
     # Hit points
     pc.hitpoints = get_hitpoints(pc)
+    return pc
+
+def print_pc(pc, with_notes=False):
     # PRINT
     print_header()
-    print("Player: _______________________________")
-    print("Name:   _______________________________")
+    print("Player: {}".format(pc.pcname))
+    print("Name:   {}".format(pc.playername))
     print('Race: {} ({})'.format(pc.race, pc.gender))
     print("Level {} {}".format(pc.level, pc.classname))
     print('Alignment: {}'.format(pc.alignment))
@@ -289,9 +294,16 @@ def main(races, classes):
     power = calculate_power(pc)
     notes.append("POWER: {}".format(power))
     print("")
-    print("Notes:")
-    for note in notes:
-        print("    {}".format(note))
+    if with_notes:
+        print("Notes:")
+        for note in notes:
+            print("    {}".format(note))
+    return pc.classname
+
+
+def main(races, classes):
+    pc = create_pc(races, classes, level=1)
+    print_pc(pc, with_notes=False)
     return pc.classname
 
 
