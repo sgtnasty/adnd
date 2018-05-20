@@ -75,7 +75,7 @@ def qualify_for_class(class_info, abilities):
     return True
 
 
-def get_class(classes, pc):
+def determine_class(classes, pc):
     """
     Abilitiy best suited for class:
     str: fighter
@@ -84,7 +84,6 @@ def get_class(classes, pc):
     dex: thief
     con:
     cha: 
-
     wis/cha: druid
     str/wis/cha: paladin
     str/int/wis/con: ranger
@@ -105,6 +104,22 @@ def get_class(classes, pc):
         print("***** ERROR *****")
         print("This PC does not qualify for ANY class!")
         return ""
+    if "Fighter" in classes_qualify:
+        if pc.abilities.STR() >= 18:
+            notes.append("Preselected Fighter class due to 18 STR")
+            return "Fighter"
+    if "Cleric" in classes_qualify:
+        if pc.abilities.WIS() >= 18:
+            notes.append("Preselected Cleric class due to 18 WIS")
+            return "Cleric"
+    if "Magic-User" in classes_qualify:
+        if pc.abilities.INT() >= 18:
+            notes.append("Preselected Magic-User class due to 18 INT")
+            return "Magic-User"
+    if "Thief" in classes_qualify:
+        if pc.abilities.DEX() >= 18:
+            notes.append("Preselected Theif class due to 18 DEX")
+            return "Thief"
     return numpy.random.choice(classes_qualify)
 
 
@@ -212,8 +227,12 @@ def create_pc(races, classes, level=1, name="", player_name = ""):
     pc.abilities.Dexterity = apply_racial_ability(pc, 'dex')
     pc.abilities.Constitution = apply_racial_ability(pc, 'con')
     pc.abilities.Charisma = apply_racial_ability(pc, 'cha')
+    # pc.abilities.Strength = 18
+    # pc.abilities.Intelligence = 18
+    # pc.abilities.Wisdom = 18
+    # pc.abilities.Dexterity = 18
     # Determine class (PHB page 18)
-    pc.classname = get_class(classes, pc)
+    pc.classname = determine_class(classes, pc)
     cn = str(pc.classname)
     pc.isFighter = ((cn == "Fighter") or (cn == "Paladin") or (cn == "Ranger"))
     pc.isCleric = ((cn == "Cleric") or (cn == "Druid"))
@@ -228,8 +247,7 @@ def create_pc(races, classes, level=1, name="", player_name = ""):
     if len(pc.classname) == 0:
         return pc.classname
     pc.class_info = classes[pc.classname]
-    pc.abilities.Strength = 18
-    if (pc.isFighter and pc.abilities.STR() == 18):
+    if (pc.isFighter and pc.abilities.STR() >= 18):
         notes.append("Rolling increased Strength for Fighter with 18 STR")
         pc.abilities.FighterStrengthBonus = roll_high_str()
     # Determine alignment (PHB page 33)
@@ -303,7 +321,7 @@ def print_pc(pc, with_notes=False):
 
 def main(races, classes):
     pc = create_pc(races, classes, level=1)
-    print_pc(pc, with_notes=False)
+    print_pc(pc, with_notes=True)
     return pc.classname
 
 
