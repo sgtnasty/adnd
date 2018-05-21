@@ -242,7 +242,7 @@ def create_pc(races, classes, level=1, name="", player_name = ""):
     notes.append("isThief={}".format(pc.isThief))
     notes.append("isMonk={}".format(pc.isMonk))
     if len(pc.classname) == 0:
-        return pc.classname
+        return None
     pc.class_info = classes[pc.classname]
     if (pc.isFighter and pc.abilities.STR() >= 18):
         notes.append("Rolling increased Strength for Fighter with 18 STR")
@@ -383,17 +383,20 @@ def pick_weapons(pc, weapon_list):
 
 def main(races, classes, armor_list, weapon_list):
     pc = create_pc(races, classes, level=1)
-    pick_armor(pc, armor_list)
-    pick_weapons(pc, weapon_list)
-    print_pc(pc, with_notes=True)
-    return pc.classname
+    if pc is not None:
+        pick_armor(pc, armor_list)
+        pick_weapons(pc, weapon_list)
+        print_pc(pc, with_notes=True)
+        return pc.classname
+    else:
+        return ""
 
 
 def search_for_class(races, classes, armor_list, weapons_list, desired_class):
     c = ""
     iters = 0
     while True:
-        c = main(races, classes)
+        c = main(races, classes, armor_list, weapons_list)
         del notes[:]
         iters = iters + 1
         print(" ")
