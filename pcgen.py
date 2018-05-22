@@ -261,6 +261,20 @@ def create_pc(races, classes, level=1, name="", player_name = ""):
     pc.hitpoints = get_hitpoints(pc)
     return pc
 
+
+def print_score(name, score):
+    g1 = unichr(2588)
+    g0 = unichr(2591)
+    ga = []
+    for i in range(18):
+        g = g0
+        if i <= score:
+            g = g1
+        ga.append(g)
+    graph = u''.join(ga)
+    print(u'{}: {}  {}'.format(name, score, graph.encode('utf-8', errors="replace")))
+
+
 def print_pc(pc, with_notes=False):
     # PRINT
     print_header()
@@ -277,6 +291,7 @@ def print_pc(pc, with_notes=False):
         print('Str: {}'.format(pc.abilities.STR()))
     print("    {}".format(pc.abilities.descr_str(isFighter=pc.isFighter)))
     print('Int: {}'.format(pc.abilities.INT()))
+    # print_score("Int", pc.abilities.INT())
     print("    {}".format(pc.abilities.descr_int(isMagicUser=pc.isMagicUser)))
     print('Wis: {}'.format(pc.abilities.WIS()))
     print("    {}".format(pc.abilities.descr_wis(isCleric=pc.isCleric)))

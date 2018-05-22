@@ -12,8 +12,8 @@
         "Studded": { "cost": 15, "base.ac": 7, "isleather": false, "bulk": "fairly", "weight": 20, "base.move": 9 }
     },
     "helmets": {
-        "Helmet, great": { "cost": 15, "ac.adj": 0, "isleather": false },
-        "Helmet, small": { "cost": 10, "ac.adj": 0, "isleather": false }
+        "Helmet, great": { "cost": 15, "ac.adj": 0, "isleather": false, "weight": 10 },
+        "Helmet, small": { "cost": 10, "ac.adj": 0, "isleather": false, "weight": 0 }
     },
     "shields": {
         "Shield, large": { "cost": 15, "ac.adj": -1, "bulk": "bulky", "weight": 10 },

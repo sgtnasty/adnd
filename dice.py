@@ -27,6 +27,9 @@ class Abilities(object):
         print("CHA: {}".format(self.CHA))
         print("     avg = {}".format(self.power()))
 
+    def csv(self):
+        return "{},{},{},{},{},{}".format(self.STR, self.INT, self.WIS, self.DEX, self.CON, self.CHA)
+
 
 def _rolld6():
     return numpy.random.randint(1, 7)
@@ -52,8 +55,7 @@ def method1():
     a.DEX = rolld_nd6_drop_lowest(4)
     a.CON = rolld_nd6_drop_lowest(4)
     a.CHA = rolld_nd6_drop_lowest(4)
-    print("Method 1")
-    a.print_r()
+    return a
 
 
 def method2():
@@ -68,8 +70,7 @@ def method2():
     a.DEX = rolls[3]
     a.CON = rolls[4]
     a.CHA = rolls[5]
-    print("Method 2")
-    a.print_r()
+    return a
 
 
 def _method3():
@@ -88,8 +89,7 @@ def method3():
     a.DEX = _method3()
     a.CON = _method3()
     a.CHA = _method3()
-    print("Method 3")
-    a.print_r()
+    return a
 
 
 def method4():
@@ -107,15 +107,26 @@ def method4():
     for roll in rolls:
         if roll.power() > max_roll.power():
             max_roll = roll
+    return a
     print("Method 4")
     max_roll.print_r()
 
 
 def main():
-    method1()
-    method2()
-    method3()
-    method4()
+    a1 = method1()
+    a2 = method2()
+    a3= method3()
+    a4 = method4()
+    fp = open('save.csv', 'a+')
+    fp.write(a1.csv())
+    fp.write('\n')
+    fp.write(a2.csv())
+    fp.write('\n')
+    fp.write(a3.csv())
+    fp.write('\n')
+    fp.write(a4.csv())
+    fp.write('\n')
+    fp.close()    
 
 
 if __name__ == '__main__':
